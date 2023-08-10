@@ -1,9 +1,8 @@
 "use client";
-
 import React, { useState } from "react";
-import "./postcard.css";
+import "./postcard.css"; // Make sure to have your CSS file
 
-const PostCard = ({ content, upvotes, downvotes }) => {
+const PostCard = ({ username, image, content, upvotes, downvotes }) => {
   const [currentUpvotes, setCurrentUpvotes] = useState(upvotes);
   const [currentDownvotes, setCurrentDownvotes] = useState(downvotes);
 
@@ -17,20 +16,34 @@ const PostCard = ({ content, upvotes, downvotes }) => {
 
   return (
     <div className="post-card">
-      <p className="post-content">{content}</p>
-      <div className="vote-buttons">
-        <button className="vote-button upvote-button" onClick={handleUpvote}>
-          ⬆️
-        </button>
-        <span className="vote-count">{currentUpvotes}</span>
-        <button
-          className="vote-button downvote-button"
-          onClick={handleDownvote}
-        >
-          ⬇️
-        </button>
-        <span className="vote-count">{currentDownvotes}</span>
+      <div className="user-info">
+        <img src={image} alt={`${username}'s profile`} className="user-image" />
+        <span className="username">{username}</span>
       </div>
+
+      {[1, 2, 3].map((item) => {
+        return (
+          <>
+            <p className="post-content">{content}</p>
+            <div className="vote-buttons">
+              <button
+                className="vote-button upvote-button"
+                onClick={handleUpvote}
+              >
+                ⬆️
+              </button>
+              <span className="vote-count">{currentUpvotes}</span>
+              <button
+                className="vote-button downvote-button"
+                onClick={handleDownvote}
+              >
+                ⬇️
+              </button>
+              <span className="vote-count">{currentDownvotes}</span>
+            </div>
+          </>
+        );
+      })}
     </div>
   );
 };
