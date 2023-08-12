@@ -1,0 +1,60 @@
+.userMenu {
+  width: 300px;
+  background-color: #ffffff;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 16px;
+  color: black !important;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.profilePicture {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.profileDetails {
+  flex: 1;
+}
+
+.username {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.headline {
+  font-size: 1rem;
+  color: #657786;
+  margin: 4px 0;
+}
+
+.location {
+  font-size: 0.9rem;
+  color: #657786;
+  margin: 0;
+}
+
+.menuItems {
+  margin-top: 16px;
+}
+
+.menuLink {
+  display: block;
+  color: #1a1a1a;
+  text-decoration: none;
+  padding: 8px 0;
+  transition: background-color 0.2s ease;
+}
+
+.menuLink:hover {
+  background-color: #f3f4f6;
+}
