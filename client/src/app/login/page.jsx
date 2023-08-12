@@ -18,6 +18,10 @@ const Login = (props) => {
     setInfo((prev) => ({ ...prev, [name]: value }));
   };
 
+  const onClick = () => {
+    console.log("entering as a guest");
+  };
+
   return (
     <div className={style.centered}>
       <div className={style.card}>
@@ -35,7 +39,7 @@ const Login = (props) => {
           Don't have an account? <Link href={"/signup"}> Sign Up</Link>
         </div>
         <Seprator />
-        <Button> Continue as Guest</Button>
+        <Button onClick={onClick}> Continue as Guest</Button>
       </div>
     </div>
   );
