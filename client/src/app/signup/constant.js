@@ -1,5 +1,10 @@
 export const fields = [
   {
+    name: "name",
+    label: "Name",
+    validation: ["required"],
+  },
+  {
     name: "email",
     label: "Email",
     validation: ["required", "email"],

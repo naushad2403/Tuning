@@ -1,7 +1,8 @@
+"use client";
 import TopNavBar from "@/layouts/TopNavBar";
 import "./globals.css";
 import { Inter } from "next/font/google";
-
+import { usePathname } from "next/navigation";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -10,10 +11,13 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+  const noNav = ["/login", "/signup"];
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <TopNavBar />
+        {!noNav.includes(pathname) && <TopNavBar />}
         {children}
       </body>
     </html>
