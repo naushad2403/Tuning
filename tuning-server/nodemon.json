@@ -1,0 +1,5 @@
+{
+    "watch": ["routes", "serverless.yml"],
+    "ext": "js,yml,yaml",
+    "exec": "serverless offline start"
+  }

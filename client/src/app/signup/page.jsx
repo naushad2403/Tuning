@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 const SignUp = (props) => {
   const [info, setInfo] = useState({
     name: "",
+
     email: "",
     password: "",
     confirmPassword: "",
@@ -29,9 +30,11 @@ const SignUp = (props) => {
     setConfirmationCode(value);
   };
 
+
   const onChange = (name, value) => {
     setInfo((prev) => ({ ...prev, [name]: value }));
   };
+
 
   const handleSignUp = async () => {
     const response = await signup({
@@ -87,11 +90,14 @@ const SignUp = (props) => {
             <Button onClick={confirmationSingUp}>Singup</Button>
           </>
         )}
+
         <div className={style.info}>
           Already have an account? <Link href={"/login"}> Login</Link>
         </div>
         <Seprator />
+
         <Button onClick={() => {}}> Continue as Guest</Button>
+
       </div>
     </div>
   );

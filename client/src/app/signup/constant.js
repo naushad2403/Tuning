@@ -9,7 +9,6 @@ export const fields = [
     name: "email",
     label: "Email",
     type: "text",
-
     validation: ["required", "email"],
   },
   {
