@@ -1,4 +1,5 @@
 // components/InputWithButton.js
+import Input from "./Input";
 import styles from "./inputwithbutton.module.css";
 
 const InputWithButton = ({
@@ -7,17 +8,21 @@ const InputWithButton = ({
   input,
   children,
   placeholder,
+  isInvalid,
+  error,
+  name,
+  label,
 }) => {
   return (
     <div className={styles.container}>
-      <input
-        type="text"
-        placeholder={placeholder}
+      <Input
+        onChange={onChange}
         value={input}
-        onChange={(e) => {
-          onChange(e.target.value);
-        }}
-        className={styles.input}
+        placeholder={placeholder}
+        isInvalid={isInvalid}
+        error={error}
+        name={name}
+        label={label}
       />
       <button onClick={onClick} className={styles.button}>
         {children}
