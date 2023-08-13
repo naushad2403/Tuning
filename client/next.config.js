@@ -4,9 +4,8 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/user/:path*",
-        destination:
-          "https://6nwki6q3vl.execute-api.us-east-1.amazonaws.com/user/:path*",
+        source: "/api/:path*",
+        destination: "https://funky-seahorse-locally.ngrok-free.app/api/:path*",
       },
     ];
   },
