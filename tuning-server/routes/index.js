@@ -1,7 +1,7 @@
 const authRoutes = require("./auth.route");
 
 const routes = (app) => {
-    app.use("/user", authRoutes);
+    app.use("/api/v1/auth", authRoutes);
 }
 
 
