@@ -6,10 +6,12 @@ const jwt = require("jsonwebtoken");
 // aws.config.update({ region: "us-east-1" }); // Replace with your AWS region
 
 const cognito = new aws.CognitoIdentityServiceProvider();
-const USER_POOL_ID = "us-east-2_RWP2wNfUg"; // Replace with your User Pool ID
-const CLIENT_ID = "3j39qa8679kg1nkmn6tdcc8cbc"; // Replace with your App Client ID
-const JWT_SECRET = "s4IsOurs";
+const USER_POOL_ID = process.env.USER_POOL_ID; // Replace with your User Pool ID
+const CLIENT_ID = process.env.CLIENT_ID; // Replace with your App Client ID
+const JWT_SECRET = process.env.JWT_SECRET;
 
+
+console.log(CLIENT_ID, process.env);
 
 
 router.post("/signup", (req, res) => {
@@ -84,8 +86,6 @@ router.post("/forgot-password", (req, res) => {
 
   const params = {
     ClientId: CLIENT_ID,
-    UserPoolId: USER_POOL_ID,
-
     Username: email.split("@")[0]
   };
 
@@ -104,8 +104,6 @@ router.post("/reset-password", (req, res) => {
 
   const params = {
     ClientId: CLIENT_ID,
-    UserPoolId: USER_POOL_ID,
-
     Username: email.split("@")[0],
     ConfirmationCode: confirmationCode,
     Password: newPassword,
