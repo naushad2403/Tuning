@@ -51,5 +51,4 @@ resources:
         TableName: ${self:custom.tableName}
 
 plugins:
-  - serverless-dynamodb-local
   - serverless-offline
