@@ -7,17 +7,20 @@ import Link from "next/link";
 import Button from "@/components/Button/Button";
 import style from "../page.module.css";
 import Seprator from "@/components/seprator/Seprator";
-
-import InputWithButton from "@/components/Input/InputwithButton";
 import { confirmSignup, signup } from "@/services/auth";
+import { useRouter } from "next/navigation";
 
 const SignUp = (props) => {
   const [info, setInfo] = useState({
-    name: "Mehak",
-    email: "b7mehak@gmail.com",
-    password: "NotToday@123",
+    name: "",
+    email: "",
+    password: "",
     confirmPassword: "",
   });
+
+  const router = useRouter();
+
+  const [codeSent, setMailSend] = useState(false);
 
   const [confirmationCode, setConfirmationCode] = useState("");
 
@@ -31,50 +34,58 @@ const SignUp = (props) => {
   };
 
   const handleSignUp = async () => {
-    const data = await signup({
+    const response = await signup({
       email: info.email,
       password: info.password,
       name: info.name,
     });
+
+    if (!response.err) {
+      console.log("inside this response is", response);
+      setMailSend(true);
+    }
   };
 
   const confirmationSingUp = async () => {
-    console.log("inside this confriamtaion");
-
     const response = await confirmSignup({
       confirmationCode: confirmationCode,
       email: info.email,
     });
 
-    if (response.data) {
-    } else {
+    if (!response.error) {
+      // navigate to login screen()
+      router.push("/login");
     }
   };
 
   return (
     <div className={style.centered}>
       <div className={style.card}>
-        {fields.map((item, index) => (
-          <Input
-            key={index}
-            {...item}
-            onChange={onChange}
-            value={info[item.name]}
-          />
-        ))}
-        <InputWithButton
-          input={confirmationCode}
-          onChange={onCodeUpdate}
-          onClick={handleSignUp}
-          placeholder={"Enter code"}
-          label={"Enter code"}
-          name="code"
-        >
-          Get Code
-        </InputWithButton>
+        {!codeSent ? (
+          <>
+            {fields.map((item, index) => (
+              <Input
+                key={index}
+                {...item}
+                onChange={onChange}
+                value={info[item.name]}
+              />
+            ))}
 
-        {confirmationCode?.length > 0 && (
-          <Button onClick={confirmationSingUp}>Singup</Button>
+            <Button onClick={handleSignUp}> Get Code</Button>
+          </>
+        ) : (
+          <>
+            <Input
+              input={confirmationCode}
+              onChange={onCodeUpdate}
+              onClick={handleSignUp}
+              placeholder={"Enter code"}
+              label={"Enter confirmation code"}
+              name="code"
+            />
+            <Button onClick={confirmationSingUp}>Singup</Button>
+          </>
         )}
         <div className={style.info}>
           Already have an account? <Link href={"/login"}> Login</Link>

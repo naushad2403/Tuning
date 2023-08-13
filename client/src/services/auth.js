@@ -1,9 +1,9 @@
 import axios from "axios";
 import { END_POINTS } from "./domain";
 
-export const getPasswordCode = async () => {
+export const getPasswordCode = async (body) => {
   try {
-    const response = await axios.post(`${END_POINTS.forgetPassword}`);
+    const response = await axios.post(`${END_POINTS.forgetPassword}`, body);
     if (response?.data) {
       return {
         data: response.data,
@@ -18,9 +18,9 @@ export const getPasswordCode = async () => {
   }
 };
 
-export const resetPassword = async () => {
+export const resetPassword = async (body) => {
   try {
-    const response = await axios.post(`${END_POINTS.login}`);
+    const response = await axios.post(`${END_POINTS.resetPassword}`, body);
     if (response?.data) {
       return {
         data: response.data,

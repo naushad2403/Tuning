@@ -8,12 +8,15 @@ import Button from "@/components/Button/Button";
 import style from "../page.module.css";
 import Seprator from "@/components/seprator/Seprator";
 import { login } from "@/services/auth";
+import { useRouter } from "next/navigation";
 
 const Login = (props) => {
   const [info, setInfo] = useState({
-    email: "b7mehak@gmail.com",
-    password: "NotToday@123",
+    email: "",
+    password: "",
   });
+
+  const router = useRouter();
 
   const onChange = (name, value) => {
     setInfo((prev) => ({ ...prev, [name]: value }));
@@ -25,7 +28,10 @@ const Login = (props) => {
 
   const handleLogin = async () => {
     console.log("info", info);
-    const respoinse = await login(info);
+    const response = await login(info);
+    if (!response.error) {
+      router.push("/");
+    }
   };
 
   return (

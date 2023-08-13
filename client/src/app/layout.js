@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
-  const noNav = ["/login", "/signup"];
+  const noNav = ["/login", "/signup", "/forgetpassword"];
 
   return (
     <html lang="en">
