@@ -91,6 +91,7 @@ const SignUp = (props) => {
           Already have an account? <Link href={"/login"}> Login</Link>
         </div>
         <Seprator />
+
         <Button onClick={() => {}}> Continue as Guest</Button>
       </div>
     </div>
