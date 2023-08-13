@@ -7,6 +7,8 @@ import Link from "next/link";
 import Button from "@/components/Button/Button";
 import style from "../page.module.css";
 import Seprator from "@/components/seprator/Seprator";
+import { login } from "@/services/auth";
+import { useRouter } from "next/navigation";
 
 const Login = (props) => {
   const [info, setInfo] = useState({
@@ -14,8 +16,22 @@ const Login = (props) => {
     password: "",
   });
 
+  const router = useRouter();
+
   const onChange = (name, value) => {
     setInfo((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const onClick = () => {
+    console.log("entering as a guest");
+  };
+
+  const handleLogin = async () => {
+    console.log("info", info);
+    const response = await login(info);
+    if (!response.error) {
+      router.push("/");
+    }
   };
 
   return (
@@ -29,13 +45,16 @@ const Login = (props) => {
             value={info[item.name]}
           />
         ))}
-        <span className={style.forgetPassword}> Forget password</span>
-        <Button>Login</Button>
+        <span className={style.forgetPassword}>
+          {" "}
+          <Link href={"/forgetpassword"}>Forget password</Link>
+        </span>
+        <Button onClick={handleLogin}>Login</Button>
         <div className={style.info}>
           Don't have an account? <Link href={"/signup"}> Sign Up</Link>
         </div>
         <Seprator />
-        <Button> Continue as Guest</Button>
+        <Button onClick={onClick}> Continue as Guest</Button>
       </div>
     </div>
   );

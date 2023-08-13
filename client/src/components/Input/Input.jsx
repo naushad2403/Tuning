@@ -6,11 +6,11 @@ const Input = ({ type, name, value, onChange, label, isInvalid, error }) => {
         {label}
       </label>
       <input
-        type={type}
+        type="text"
         id={name}
         value={value}
         onChange={(e) => {
-          onChange(name, e.value);
+          onChange(name, e.target.value);
         }}
         className={`input ${isInvalid ? "input-error" : ""}`}
       />
