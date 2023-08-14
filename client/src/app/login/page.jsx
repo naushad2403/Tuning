@@ -9,6 +9,7 @@ import style from "../page.module.css";
 import Seprator from "@/components/seprator/Seprator";
 import { login } from "@/services/auth";
 import { useRouter } from "next/navigation";
+import { performValidations } from "@/helper/validator";
 
 const Login = (props) => {
   const [info, setInfo] = useState({
@@ -16,9 +17,17 @@ const Login = (props) => {
     password: "",
   });
 
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
   const router = useRouter();
 
   const onChange = (name, value) => {
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
     setInfo((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -27,7 +36,13 @@ const Login = (props) => {
   };
 
   const handleLogin = async () => {
-    console.log("info", info);
+    const error = performValidations(fields, info);
+
+    if (Object.keys(error).length != 0) {
+      setErrors(error);
+      return;
+    }
+
     const response = await login(info);
     if (!response.error) {
       router.push("/");
@@ -43,6 +58,8 @@ const Login = (props) => {
             {...item}
             onChange={onChange}
             value={info[item.name]}
+            isInvalid={errors[item.name]?.length != 0}
+            error={errors[item.name]}
           />
         ))}
         <span className={style.forgetPassword}>
