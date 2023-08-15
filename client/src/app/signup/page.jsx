@@ -9,7 +9,7 @@ import style from "../page.module.css";
 import Seprator from "@/components/seprator/Seprator";
 import { confirmSignup, signup } from "@/services/auth";
 import { useRouter } from "next/navigation";
-import { performValidations } from "@/helper/validator";
+import { hasError, performValidations } from "@/helper/validator";
 
 const SignUp = (props) => {
   const [info, setInfo] = useState({
@@ -63,7 +63,7 @@ const SignUp = (props) => {
   const handleSignUp = async () => {
     const error = performValidations(fields, info);
 
-    if (Object.keys(error).length != 0) {
+    if (hasError(error)) {
       setErrors(error);
       return;
     }
