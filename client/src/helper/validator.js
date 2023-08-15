@@ -65,3 +65,11 @@ export const performValidations = (fields, data) => {
 
   return errors;
 };
+
+export const hasError = (error) => {
+  const data = Object.values(error).every((item) => {
+    return item.length != 0;
+  });
+  console.log("inside this data is", data, error);
+  return data;
+};

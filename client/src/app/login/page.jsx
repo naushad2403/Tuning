@@ -9,7 +9,7 @@ import style from "../page.module.css";
 import Seprator from "@/components/seprator/Seprator";
 import { login } from "@/services/auth";
 import { useRouter } from "next/navigation";
-import { performValidations } from "@/helper/validator";
+import { hasError, performValidations } from "@/helper/validator";
 
 const Login = (props) => {
   const [info, setInfo] = useState({
@@ -38,13 +38,15 @@ const Login = (props) => {
   const handleLogin = async () => {
     const error = performValidations(fields, info);
 
-    if (Object.keys(error).length != 0) {
+    if (hasError(error)) {
       setErrors(error);
       return;
     }
 
     const response = await login(info);
+
     if (!response.error) {
+      console.log("response.data", response);
       router.push("/");
     }
   };

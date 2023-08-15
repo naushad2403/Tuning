@@ -9,7 +9,11 @@ import style from "../page.module.css";
 import Button from "@/components/Button/Button";
 
 import { useRouter } from "next/navigation";
-import { performValidations, validateEmail } from "@/helper/validator";
+import {
+  hasError,
+  performValidations,
+  validateEmail,
+} from "@/helper/validator";
 import { fields } from "./constant";
 
 const ForgotPassword = () => {
@@ -41,7 +45,6 @@ const ForgotPassword = () => {
     }
 
     const response = await getPasswordCode({ email: info.email });
-    console.log("response", response);
     if (!response.error) {
       setLoading(true);
       setMailSet(true);
@@ -52,7 +55,7 @@ const ForgotPassword = () => {
   const reset = async () => {
     const error = performValidations(fields, info);
 
-    if (Object.keys(error).length != 0) {
+    if (hasError(error)) {
       setErrors(error);
       return;
     }
