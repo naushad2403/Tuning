@@ -119,4 +119,44 @@ router.post("/reset-password", (req, res) => {
   });
 });
 
+router.get("/whoami", (req, res) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ error: "JWT token missing from headers" });
+  }
+
+  try {
+    const decodedToken = jwt.verify(token, JWT_SECRET);
+
+    // The decodedToken will contain user claims
+    res.json(decodedToken);
+  } catch (error) {
+    console.error("Error decoding JWT:", error);
+    res.status(400).json({ error: "Invalid JWT token" });
+  }
+});
+
+router.get("/users", async (req, res) => {
+  const { pageNum, pageSize, name } = req.query; // Get the page number from the query parameter
+
+  const params = {
+    ClientId: CLIENT_ID,
+    AttributesToGet: ["email", "name", "custom:bio", "custom:avatar"], // Add the attributes you want to retrieve
+    Limit: pageSize,
+    PaginationToken: pageNum,
+    Filter: `name ^= "${name}"`, // Provide the pagination token
+  };
+
+  try {
+    const userList = await cognito.listUsers(params).promise();
+    res.json(userList);
+  } catch (error) {
+    console.error("Error fetching user list:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
 module.exports = router;

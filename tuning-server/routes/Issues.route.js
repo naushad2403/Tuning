@@ -26,14 +26,14 @@ router.post("/create", (req, res) => {
   const params = {
     TableName: "Issues", // Replace 'Issues' with your actual table name
     Item: {
-      username: { S: username },
+      User: { S: username },
       content: { S: content },
       creator: { S: showName ? req.username : "anonymous" },
       supportReason: {
         L: [
           {
             M: {
-              user: { S: req.username }, // Use username here
+              User: { S: req.username }, // Use username here
               reason: { S: reason },
             },
           },
@@ -68,7 +68,7 @@ router.get("/:username", (req, res) => {
   const params = {
     TableName: "Issues", // Replace 'Issues' with your actual table name
     // IndexName: "username-index", // Replace with the actual index name if applicable
-    KeyConditionExpression: "username = :u",
+    KeyConditionExpression: "User = :u",
     ExpressionAttributeValues: {
       ":u": { S: usernameToQuery },
     },
@@ -112,6 +112,7 @@ router.get('/', (req, res) => {
     const pageSize = parseInt(req.query.pageSize) || 10;
     const pageCount = parseInt(req.query.pageCount) || 1;
     const issueCount = parseInt(req.query.numberOfIssues) || 3;
+    res.status(200).json({msg: "working"});
 });
 
 /**Get reason issue wise
