@@ -5,7 +5,7 @@ module.exports = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://255.255.255.0:3000/api/:path*",
+        destination: "https://funky-seahorse-locally.ngrok-free.app/api/:path*",
       },
     ];
   },
