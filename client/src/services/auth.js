@@ -47,7 +47,7 @@ export const login = async (body) => {
   } catch (e) {
     return {
       error: true,
-      data: e,
+      data: e?.response?.data,
     };
   }
 };
