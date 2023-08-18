@@ -21,9 +21,9 @@ const PostCard = ({ username, image, content, upvotes, downvotes }) => {
         <span className="username">{username}</span>
       </div>
 
-      {[1, 2, 3].map((item) => {
+      {[1, 2, 3].map((item, index) => {
         return (
-          <>
+          <div key={index}>
             <p className="post-content">{content}</p>
             <div className="vote-buttons">
               <button
@@ -41,7 +41,7 @@ const PostCard = ({ username, image, content, upvotes, downvotes }) => {
               </button>
               <span className="vote-count">{currentDownvotes}</span>
             </div>
-          </>
+          </div>
         );
       })}
     </div>

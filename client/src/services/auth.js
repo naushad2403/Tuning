@@ -64,7 +64,7 @@ export const signup = async (body) => {
   } catch (e) {
     return {
       error: true,
-      data: e,
+      data: e?.response?.data,
     };
   }
 };
