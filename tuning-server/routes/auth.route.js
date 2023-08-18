@@ -119,7 +119,7 @@ router.post("/reset-password", (req, res) => {
   });
 });
 
-router.get("/whoami", (req, res) => {
+router.get("/whoami", async (req, res) => {
   const token = req.headers.authorization;
 
   if (!token) {
@@ -130,7 +130,12 @@ router.get("/whoami", (req, res) => {
     const decodedToken = jwt.verify(token, JWT_SECRET);
 
     // The decodedToken will contain user claims
-    res.json(decodedToken);
+    const params = {
+      UserPoolId: USER_POOL_ID,
+      Username: decodedToken.email, // Use the email as the username to fetch the user
+    };
+      const userDetails = await cognito.adminGetUser(params).promise();
+      res.json(userDetails);
   } catch (error) {
     console.error("Error decoding JWT:", error);
     res.status(400).json({ error: "Invalid JWT token" });
