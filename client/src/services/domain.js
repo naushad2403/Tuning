@@ -5,4 +5,5 @@ export const END_POINTS = {
   forgetPassword: `${api}auth/forgot-password`,
   resetPassword: `${api}auth/reset-password`,
   singupCode: `${api}auth/confirm-signup`,
+  whoami: `${api}auth/whoami`,
 };
