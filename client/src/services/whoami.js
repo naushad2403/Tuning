@@ -4,7 +4,13 @@ import { BaseApi } from "./api";
 export const whoAmi = BaseApi.injectEndpoints({
   endpoints: (builder) => ({
     getWhoAmI: builder.query({
-      query: () => `${END_POINTS.whoami}`,
+      query: () => ({
+        url: `${END_POINTS.whoami}`,
+        method: "GET",
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      }),
       transformResponse: (res, meta, args) => {
         return res;
       },

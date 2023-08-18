@@ -46,8 +46,14 @@ const Login = (props) => {
     const response = await login(info);
 
     if (!response.error) {
-      console.log("response.data", response);
+      localStorage.setItem("token", response?.data?.token);
       router.push("/");
+    } else {
+      console.log("response.data", response.data.response.data.error.message);
+      setErrors((prev) => ({
+        ...prev,
+        password: response?.data?.error?.message || error.message,
+      }));
     }
   };
 
