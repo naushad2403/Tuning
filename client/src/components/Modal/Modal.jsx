@@ -3,12 +3,6 @@ import "./modal.css";
 
 const Modal = ({ isOpen, onClose, children }) => {
   useEffect(() => {
-    const handleEscapeKey = (event) => {
-      if (event.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-
     if (isOpen) {
       document.documentElement.style.overflow = "hidden";
       document.body.scroll = "no";

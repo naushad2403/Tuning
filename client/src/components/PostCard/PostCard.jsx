@@ -1,10 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import "./postcard.css"; // Make sure to have your CSS file
+import "./postcard.css";
 import VoteCard from "../VoteCard/VoteCard";
-import Button from "../Button/Button";
 import CommentBox from "../CommentBox/CommentBox";
-import Modal from "../Modal/Modal";
 
 const PostCard = ({ username, image, content, upvotes, downvotes }) => {
   const [currentUpvotes, setCurrentUpvotes] = useState(upvotes);
