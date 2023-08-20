@@ -1,10 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import "./postcard.css"; // Make sure to have your CSS file
+import VoteCard from "../VoteCard/VoteCard";
+import Button from "../Button/Button";
+import CommentBox from "../CommentBox/CommentBox";
 
 const PostCard = ({ username, image, content, upvotes, downvotes }) => {
   const [currentUpvotes, setCurrentUpvotes] = useState(upvotes);
   const [currentDownvotes, setCurrentDownvotes] = useState(downvotes);
+
+  const [comment, addComment] = useState("");
 
   const handleUpvote = () => {
     setCurrentUpvotes(currentUpvotes + 1);
@@ -12,6 +17,10 @@ const PostCard = ({ username, image, content, upvotes, downvotes }) => {
 
   const handleDownvote = () => {
     setCurrentDownvotes(currentDownvotes + 1);
+  };
+
+  const onCommentChange = (e) => {
+    addComment(e.target.value);
   };
 
   return (
@@ -23,27 +32,16 @@ const PostCard = ({ username, image, content, upvotes, downvotes }) => {
 
       {[1, 2, 3].map((item, index) => {
         return (
-          <div key={index}>
-            <p className="post-content">{content}</p>
-            <div className="vote-buttons">
-              <button
-                className="vote-button upvote-button"
-                onClick={handleUpvote}
-              >
-                ⬆️
-              </button>
-              <span className="vote-count">{currentUpvotes}</span>
-              <button
-                className="vote-button downvote-button"
-                onClick={handleDownvote}
-              >
-                ⬇️
-              </button>
-              <span className="vote-count">{currentDownvotes}</span>
-            </div>
-          </div>
+          <VoteCard
+            message={content}
+            upCount={currentUpvotes}
+            downCount={currentDownvotes}
+            onUp={handleUpvote}
+            onDown={handleDownvote}
+          />
         );
       })}
+      <CommentBox comment={comment} onCommentChange={onCommentChange} />
     </div>
   );
 };
