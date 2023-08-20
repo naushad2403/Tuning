@@ -12,7 +12,7 @@ const CommentBox = ({ onSubmit, comment, onCommentChange }) => {
     <div className={styles.commentBox}>
       <textarea
         className={styles.textarea}
-        placeholder="Write your comment here..."
+        placeholder="Write your change ..."
         value={comment}
         onChange={onCommentChange}
         maxLength={250}
