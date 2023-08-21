@@ -3,20 +3,13 @@ import React, { useState } from "react";
 import "./postcard.css";
 import VoteCard from "../VoteCard/VoteCard";
 import CommentBox from "../CommentBox/CommentBox";
+import { useSelector } from "react-redux";
+import { userInfo } from "@/services/whoami";
 
-const PostCard = ({ username, image, content, upvotes, downvotes }) => {
-  const [currentUpvotes, setCurrentUpvotes] = useState(upvotes);
-  const [currentDownvotes, setCurrentDownvotes] = useState(downvotes);
-
+const PostCard = ({ name, image, issues, setModal }) => {
   const [comment, addComment] = useState("");
 
-  const handleUpvote = () => {
-    setCurrentUpvotes(currentUpvotes + 1);
-  };
-
-  const handleDownvote = () => {
-    setCurrentDownvotes(currentDownvotes + 1);
-  };
+  const { data: user } = useSelector(userInfo);
 
   const onCommentChange = (e) => {
     addComment(e.target.value);
@@ -25,22 +18,22 @@ const PostCard = ({ username, image, content, upvotes, downvotes }) => {
   return (
     <div className="post-card">
       <div className="user-info">
-        <img src={image} alt={`${username}'s profile`} className="user-image" />
-        <span className="username">{username}</span>
+        <img
+          src={"/assets/placeholder.svg"}
+          alt={`${name}'s profile`}
+          className="user-image"
+        />
+        <span className="username">{name}</span>
       </div>
 
-      {[1, 2, 3].map((item, index) => {
+      {issues.map((item, index) => {
         return (
-          <VoteCard
-            message={content}
-            upCount={currentUpvotes}
-            downCount={currentDownvotes}
-            onUp={handleUpvote}
-            onDown={handleDownvote}
-          />
+          <VoteCard {...item} key={index} setModal={setModal} user={user} />
         );
       })}
-      <CommentBox comment={comment} onCommentChange={onCommentChange} />
+      {user && (
+        <CommentBox comment={comment} onCommentChange={onCommentChange} />
+      )}
     </div>
   );
 };

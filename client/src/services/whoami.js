@@ -19,3 +19,4 @@ export const whoAmi = BaseApi.injectEndpoints({
 });
 
 export const { useGetWhoAmIQuery } = whoAmi;
+export const userInfo = whoAmi.endpoints.getWhoAmI.select();

@@ -128,7 +128,14 @@ const SignUp = (props) => {
         </div>
         <Seprator />
 
-        <Button onClick={() => {}}> Continue as Guest</Button>
+        <Button
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          {" "}
+          Continue as Guest
+        </Button>
       </div>
     </div>
   );

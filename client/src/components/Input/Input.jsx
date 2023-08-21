@@ -6,7 +6,7 @@ const Input = ({ type, name, value, onChange, label, isInvalid, error }) => {
         {label}
       </label>
       <input
-        type="text"
+        type={type}
         id={name}
         value={value}
         onChange={(e) => {
