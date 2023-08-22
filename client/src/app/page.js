@@ -22,7 +22,10 @@ export default function Home() {
         })}
       </div>
       <Modal isOpen={isOpen} onClose={() => setModal(false)}>
-        <Login guest={false} />
+        <div className={styles.FlexBox}>
+          <span className={styles.modalTitle}> Please Login to continue</span>
+          <Login guest={false} />
+        </div>
       </Modal>
     </main>
   );

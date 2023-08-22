@@ -225,3 +225,14 @@
     transform: rotate(0deg);
   }
 }
+
+.modalTitle {
+  margin: auto !important;
+  font-weight: 700;
+}
+
+.FlexBox {
+  display: flex;
+  gap: 10px !important;
+  flex-direction: column;
+}
