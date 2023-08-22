@@ -53,10 +53,8 @@ router.post("/login", (req, res) => {
     if (error) {
       console.error("Error logging in:", error);
       return res.status(401).json({ error });
-    }
-
-    const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "1h" });
-    res.json({ token });
+    }  
+    res.status(200).json({ ...data });
   });
 });
 
@@ -78,6 +76,30 @@ router.post("/confirm-signup", (req, res) => {
 
     res.json({ message: "Signup confirmed successfully" });
   });
+});
+
+router.post("/resend-confirmation", (req, res)=>{
+  // Resend verification code request parameters
+    const { email } = req.body;
+
+  const resendVerificationCodeParams = {
+    ClientId: CLIENT_ID,
+    Username: email.split("@")[0]
+  };
+
+  // Resend the verification code using CognitoIdentityServiceProvider
+  cognito.resendConfirmationCode(
+    resendVerificationCodeParams,
+    (error, data) => {
+      if (error) {
+        console.error("Error resending verification code:", error);
+        return res.status(500).json({ error });
+      } else {
+        console.log("Verification code resent successfully");
+        res.status(200).json({ message: "Password reset initiated" });
+      }
+    }
+  );
 });
 
 // Handle password reset using the ForgotPassword flow
@@ -158,6 +180,27 @@ router.get("/users", async (req, res) => {
   } catch (error) {
     console.error("Error fetching user list:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/token", async(req, res)=>{
+  // Token exchange request parameters
+   const token = req.headers.authorization;
+  const tokenExchangeParams = {
+    AuthFlow: "REFRESH_TOKEN_AUTH",
+    ClientId: CLIENT_ID,
+    AuthParameters: {
+      REFRESH_TOKEN: token,
+    },
+  };
+
+  // Make the token exchange request using CognitoIdentityServiceProvider
+
+  try {
+    const response =  await cognito.initiateAuth(tokenExchangeParams).promise();
+    res.status(200).json(response);
+  } catch (error) {
+     res.status(500).json(error);
   }
 });
 

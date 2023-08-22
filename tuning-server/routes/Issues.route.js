@@ -126,11 +126,63 @@ router.get('/:issueId', (req, res) => {
 });
 
 router.post("/dislike", (req, res) => {
-    const { issueId, reason } = req.body;
+    const { issueId } = req.body;
+
+    const params = {
+      TableName: table_name,
+      Key: { IssueID: { S: issueId } },
+      UpdateExpression:
+        "SET UpvoteCount = if_not_exists(UpvoteCount, :zero) - :decr",
+      ExpressionAttributeValues: {
+        ":zero": { N: "0" },
+        ":decr": { N: "1" },
+      },
+      ReturnValues: "UPDATED_NEW",
+    };
+
+    dynamodb.updateItem(params, (err, data) => {
+      if (err) {
+        console.error("Error updating upvote count:", err);
+        res
+          .status(500)
+          .json({ error: "An error occurred while updating upvote count." });
+      } else {
+        console.log("Downvote count updated:", data);
+        res
+          .status(200)
+          .json({ message: "Downvote count updated successfully.", data });
+      }
+    });
 });
 
 router.post("/like", (req, res) => {
-    const { issueId, reason } = req.body;
+  const { issueId } = req.body;
+
+  const params = {
+    TableName: table_name,
+    Key: { IssueID: { S: issueId } },
+    UpdateExpression:
+      "SET UpvoteCount = if_not_exists(UpvoteCount, :zero) + :incr",
+    ExpressionAttributeValues: {
+      ":zero": { N: "0" },
+      ":incr": { N: "1" },
+    },
+    ReturnValues: "UPDATED_NEW",
+  };
+
+  dynamodb.updateItem(params, (err, data) => {
+    if (err) {
+      console.error("Error updating upvote count:", err);
+      res
+        .status(500)
+        .json({ error: "An error occurred while updating upvote count." });
+    } else {
+      console.log("Upvote count updated:", data);
+      res
+        .status(200)
+        .json({ message: "Upvote count updated successfully.", data });
+    }
+  });
 });
 
 module.exports = router;
