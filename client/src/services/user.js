@@ -1,11 +1,11 @@
 import { END_POINTS } from "./domain";
 import { BaseApi } from "./api";
 
-export const whoAmi = BaseApi.injectEndpoints({
+export const users = BaseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getWhoAmI: builder.query({
+    getUsers: builder.query({
       query: () => ({
-        url: `${END_POINTS.whoami}`,
+        url: `${END_POINTS.users}`,
         method: "GET",
         headers: {
           authorization: localStorage.getItem("token"),
@@ -18,5 +18,4 @@ export const whoAmi = BaseApi.injectEndpoints({
   }),
 });
 
-export const { useGetWhoAmIQuery } = whoAmi;
-export const userInfo = whoAmi.endpoints.getWhoAmI.select();
+export const { useGetUsersQuery } = users;
