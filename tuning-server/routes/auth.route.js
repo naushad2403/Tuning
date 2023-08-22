@@ -146,10 +146,9 @@ router.get("/users", async (req, res) => {
   const { pageNum, pageSize, name } = req.query; // Get the page number from the query parameter
 
   const params = {
-    ClientId: CLIENT_ID,
-    AttributesToGet: ["email", "name", "custom:bio", "custom:avatar"], // Add the attributes you want to retrieve
+    UserPoolId: USER_POOL_ID,
+    AttributesToGet: ["email", "name"], // Add the attributes you want to retrieve
     Limit: pageSize,
-    PaginationToken: pageNum,
     Filter: `name ^= "${name}"`, // Provide the pagination token
   };
 

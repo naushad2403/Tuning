@@ -112,7 +112,8 @@ router.get('/', (req, res) => {
     const pageSize = parseInt(req.query.pageSize) || 10;
     const pageCount = parseInt(req.query.pageCount) || 1;
     const issueCount = parseInt(req.query.numberOfIssues) || 3;
-    res.status(200).json({msg: "working"});
+    res.status(200).json({msg: "Issues api working, please use /username to fetch the user issus."});
+    
 });
 
 /**Get reason issue wise
