@@ -27,6 +27,7 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK' });
 });
 routes(app);
+
 const USERS_TABLE = process.env.USERS_TABLE;
 const client = new DynamoDBClient();
 const dynamoDbClient = DynamoDBDocumentClient.from(client);

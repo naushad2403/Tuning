@@ -114,6 +114,7 @@ router.get('/', (req, res) => {
     const issueCount = parseInt(req.query.numberOfIssues) || 3;
     res.status(200).json({msg: "Issues api working, please use /username to fetch the user issus."});
     
+    
 });
 
 /**Get reason issue wise
