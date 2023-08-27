@@ -10,20 +10,18 @@ const USER_POOL_ID = process.env.USER_POOL_ID; // Replace with your User Pool ID
 const CLIENT_ID = process.env.CLIENT_ID; // Replace with your App Client ID
 const JWT_SECRET = process.env.JWT_SECRET;
 
-
 console.log(CLIENT_ID, process.env);
-
 
 router.post("/signup", (req, res) => {
   const { email, password, name, bio, avatar } = req.body;
 
   const params = {
     ClientId: CLIENT_ID,
-    Username: email.split('@')[0],
+    Username: email.split("@")[0],
     Password: password,
     UserAttributes: [
       { Name: "name", Value: name },
-      { Name: "email", Value: email }
+      { Name: "email", Value: email },
     ],
   };
 
@@ -54,7 +52,6 @@ router.post("/login", (req, res) => {
       console.error("Error logging in:", error);
       return res.status(401).json({ error });
     }
-
     const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "1h" });
     res.json({ token });
   });
@@ -68,7 +65,6 @@ router.post("/confirm-signup", (req, res) => {
     ConfirmationCode: confirmationCode,
     Username: email.split("@")[0],
   };
-
 
   cognito.confirmSignUp(params, (error, data) => {
     if (error) {
@@ -86,7 +82,7 @@ router.post("/forgot-password", (req, res) => {
 
   const params = {
     ClientId: CLIENT_ID,
-    Username: email.split("@")[0]
+    Username: email.split("@")[0],
   };
 
   cognito.forgotPassword(params, (error, data) => {
@@ -134,8 +130,8 @@ router.get("/whoami", async (req, res) => {
       UserPoolId: USER_POOL_ID,
       Username: decodedToken.email, // Use the email as the username to fetch the user
     };
-      const userDetails = await cognito.adminGetUser(params).promise();
-      res.json(userDetails);
+    const userDetails = await cognito.adminGetUser(params).promise();
+    res.json(userDetails);
   } catch (error) {
     console.error("Error decoding JWT:", error);
     res.status(400).json({ error: "Invalid JWT token" });
@@ -160,7 +156,5 @@ router.get("/users", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-
 
 module.exports = router;
