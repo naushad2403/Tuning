@@ -7,4 +7,5 @@ export const END_POINTS = {
   singupCode: `${api}auth/confirm-signup`,
   whoami: `${api}auth/whoami`,
   users: `${api}auth/users`,
+  createIssues: `${api}/issues/create`
 };
