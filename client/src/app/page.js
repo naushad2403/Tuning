@@ -2,14 +2,14 @@
 import styles from "./page.module.css";
 import { dummyData } from "@/modal/Post";
 import PostCard from "@/components/PostCard/PostCard";
-import { useGetWhoAmIQuery } from "@/services/whoami";
+import { useGetWhoAmIQuery, useLazyRefreshTokenQuery } from "@/services/whoami";
 import { useGetUsersQuery } from "@/services/user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Login from "./login/login";
 import Modal from "@/components/Modal/Modal";
 
 export default function Home() {
-  useGetWhoAmIQuery();
+  const { error } = useGetWhoAmIQuery();
   const { data: UserData } = useGetUsersQuery();
   const [isOpen, setModal] = useState(false);
 

@@ -46,8 +46,13 @@ const Login = ({ guest = true }) => {
     const response = await login(info);
 
     if (!response.error) {
-      localStorage.setItem("token", response?.data?.token);
+      const { AccessToken, RefreshToken } =
+        response?.data?.AuthenticationResult;
+      local.setItem("email", info.email);
+      localStorage.setItem("token", AccessToken);
+      localStorage.setItem("refreshToken", RefreshToken);
       router.push("/");
+      1``;
     } else {
       setErrors((prev) => ({
         ...prev,
