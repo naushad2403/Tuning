@@ -3,7 +3,6 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
   min-height: 100vh;
 }
 
@@ -225,4 +224,15 @@
   to {
     transform: rotate(0deg);
   }
+}
+
+.modalTitle {
+  margin: auto !important;
+  font-weight: 700;
+}
+
+.FlexBox {
+  display: flex;
+  gap: 10px !important;
+  flex-direction: column;
 }

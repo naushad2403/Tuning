@@ -53,10 +53,8 @@ router.post("/login", (req, res) => {
     if (error) {
       console.error("Error logging in:", error);
       return res.status(401).json({ error });
-    }
-
-    const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "1h" });
-    res.json({ token });
+    }  
+    res.status(200).json({ ...data });
   });
 });
 
@@ -78,6 +76,30 @@ router.post("/confirm-signup", (req, res) => {
 
     res.json({ message: "Signup confirmed successfully" });
   });
+});
+
+router.post("/resend-confirmation", (req, res)=>{
+  // Resend verification code request parameters
+    const { email } = req.body;
+
+  const resendVerificationCodeParams = {
+    ClientId: CLIENT_ID,
+    Username: email.split("@")[0]
+  };
+
+  // Resend the verification code using CognitoIdentityServiceProvider
+  cognito.resendConfirmationCode(
+    resendVerificationCodeParams,
+    (error, data) => {
+      if (error) {
+        console.error("Error resending verification code:", error);
+        return res.status(500).json({ error });
+      } else {
+        console.log("Verification code resent successfully");
+        res.status(200).json({ message: "Password reset initiated" });
+      }
+    }
+  );
 });
 
 // Handle password reset using the ForgotPassword flow
@@ -118,5 +140,70 @@ router.post("/reset-password", (req, res) => {
     res.json({ message: "Password reset successful" });
   });
 });
+
+router.get("/whoami", async (req, res) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ error: "JWT token missing from headers" });
+  }
+
+  try {
+    const decodedToken = jwt.verify(token, JWT_SECRET);
+
+    // The decodedToken will contain user claims
+    const params = {
+      UserPoolId: USER_POOL_ID,
+      Username: decodedToken.email, // Use the email as the username to fetch the user
+    };
+      const userDetails = await cognito.adminGetUser(params).promise();
+      res.json(userDetails);
+  } catch (error) {
+    console.error("Error decoding JWT:", error);
+    res.status(400).json({ error: "Invalid JWT token" });
+  }
+});
+
+router.get("/users", async (req, res) => {
+  const { pageNum, pageSize, name } = req.query; // Get the page number from the query parameter
+
+  const params = {
+    UserPoolId: USER_POOL_ID,
+    AttributesToGet: ["email", "name"], // Add the attributes you want to retrieve
+    Limit: pageSize,
+    Filter: `name ^= "${name}"`, // Provide the pagination token
+  };
+
+  try {
+    const userList = await cognito.listUsers(params).promise();
+    res.json(userList);
+  } catch (error) {
+    console.error("Error fetching user list:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/token", async(req, res)=>{
+  // Token exchange request parameters
+   const token = req.headers.authorization;
+  const tokenExchangeParams = {
+    AuthFlow: "REFRESH_TOKEN_AUTH",
+    ClientId: CLIENT_ID,
+    AuthParameters: {
+      REFRESH_TOKEN: token,
+    },
+  };
+
+  // Make the token exchange request using CognitoIdentityServiceProvider
+
+  try {
+    const response =  await cognito.initiateAuth(tokenExchangeParams).promise();
+    res.status(200).json(response);
+  } catch (error) {
+     res.status(500).json(error);
+  }
+});
+
+
 
 module.exports = router;

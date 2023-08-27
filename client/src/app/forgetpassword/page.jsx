@@ -9,6 +9,12 @@ import style from "../page.module.css";
 import Button from "@/components/Button/Button";
 
 import { useRouter } from "next/navigation";
+import {
+  hasError,
+  performValidations,
+  validateEmail,
+} from "@/helper/validator";
+import { fields } from "./constant";
 
 const ForgotPassword = () => {
   const router = useRouter();
@@ -18,8 +24,14 @@ const ForgotPassword = () => {
     confirmationCode: "",
   });
 
-  const [isMailSend, setMailSet] = useState(false);
+  const [isMailSend, setMailSet] = useState(true);
   const [loading, setLoading] = useState(false);
+
+  const [errors, setErrors] = useState({
+    email: "",
+    newPassword: "",
+    confirmationCode: "",
+  });
 
   const onChange = (name, value) => {
     setInfo((prev) => ({ ...prev, [name]: value }));
@@ -27,8 +39,12 @@ const ForgotPassword = () => {
 
   const getCode = async () => {
     setLoading(true);
+
+    if (!validateEmail(info.email)) {
+      setErrors((prev) => ({ ...prev, email: "Please Enter a valid Email" }));
+    }
+
     const response = await getPasswordCode({ email: info.email });
-    console.log("response", response);
     if (!response.error) {
       setLoading(true);
       setMailSet(true);
@@ -37,6 +53,12 @@ const ForgotPassword = () => {
   };
 
   const reset = async () => {
+    const error = performValidations(fields, info);
+
+    if (hasError(error)) {
+      setErrors(error);
+      return;
+    }
     setLoading(true);
     const response = await resetPassword(info);
 
@@ -53,15 +75,15 @@ const ForgotPassword = () => {
       <div className={style.card}>
         {!isMailSend ? (
           <>
-            <p> Please enter the used email address</p>
+            <p> Please enter the associate email address</p>
             <Input
               label="Email"
               name="email"
               onChange={onChange}
               placeholder={"Enter Email"}
               value={info.email}
-              error=""
-              isInvalid={false}
+              error={errors.email}
+              isInvalid={errors?.email?.length != 0}
             />
             <Button onClick={getCode}> Get Code</Button>
           </>
@@ -73,8 +95,8 @@ const ForgotPassword = () => {
               onChange={onChange}
               placeholder={"Enter Code"}
               value={info.confirmationCode}
-              error=""
-              isInvalid={false}
+              error={errors?.confirmationCode}
+              isInvalid={errors.confirmationCode?.length != 0}
             />
 
             <Input
@@ -83,8 +105,8 @@ const ForgotPassword = () => {
               onChange={onChange}
               placeholder={"Enter Password"}
               value={info.newPassword}
-              error=""
-              isInvalid={false}
+              error={errors.newPassword}
+              isInvalid={errors?.newPassword?.length != 0}
             />
             <Button onClick={reset}> Reset Password</Button>
           </>

@@ -1,5 +1,6 @@
-org: naushad2403
+org: mehakb7
 app: tuning-server
+
 service: tuning-server
 frameworkVersion: '3'
 
@@ -29,6 +30,10 @@ provider:
             - Fn::GetAtt: [ UsersTable, Arn ]
   environment:
     USERS_TABLE: ${self:custom.tableName}
+    USER_POOL_ID : us-east-2_RWP2wNfUg 
+    CLIENT_ID : 3j39qa8679kg1nkmn6tdcc8cbc
+    JWT_SECRET : s4IsOurs
+
 functions:
   api:
     handler: index.handler

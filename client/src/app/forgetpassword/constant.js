@@ -1,14 +1,17 @@
 export const fields = [
   {
-    type: "text",
     name: "email",
     label: "Email",
     validation: ["required", "email"],
   },
   {
-    type: "password",
-    name: "password",
+    name: "newPassword",
     label: "Password",
     validation: ["required", "password"],
+  },
+  {
+    name: "confirmationCode",
+    label: "Confirmation Code",
+    validation: ["required"],
   },
 ];
