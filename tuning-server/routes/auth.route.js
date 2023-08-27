@@ -51,7 +51,7 @@ router.post("/login", (req, res) => {
     if (error) {
       console.error("Error logging in:", error);
       return res.status(401).json({ error });
-    }  
+    }
     res.status(200).json({ ...data });
   });
 });
@@ -75,13 +75,13 @@ router.post("/confirm-signup", (req, res) => {
   });
 });
 
-router.post("/resend-confirmation", (req, res)=>{
+router.post("/resend-confirmation", (req, res) => {
   // Resend verification code request parameters
-    const { email } = req.body;
+  const { email } = req.body;
 
   const resendVerificationCodeParams = {
     ClientId: CLIENT_ID,
-    Username: email.split("@")[0]
+    Username: email.split("@")[0],
   };
 
   // Resend the verification code using CognitoIdentityServiceProvider
@@ -180,11 +180,9 @@ router.get("/users", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
-router.post("/token", async(req, res)=>{
+router.post("/token", async (req, res) => {
   // Token exchange request parameters
-   const token = req.headers.authorization;
+  const token = req.headers.authorization;
   const tokenExchangeParams = {
     AuthFlow: "REFRESH_TOKEN_AUTH",
     ClientId: CLIENT_ID,
@@ -196,14 +194,11 @@ router.post("/token", async(req, res)=>{
   // Make the token exchange request using CognitoIdentityServiceProvider
 
   try {
-    const response =  await cognito.initiateAuth(tokenExchangeParams).promise();
+    const response = await cognito.initiateAuth(tokenExchangeParams).promise();
     res.status(200).json(response);
   } catch (error) {
-     res.status(500).json(error);
+    res.status(500).json(error);
   }
 });
 
-
-
->>>>>>> 4f81582513aec2d35b79b23de01ec110ad08cd4e
 module.exports = router;
