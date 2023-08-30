@@ -1,3 +1,5 @@
+
+
 const api = "/api/v1/";
 export const END_POINTS = {
   login: `${api}auth/login`,
@@ -7,5 +9,8 @@ export const END_POINTS = {
   singupCode: `${api}auth/confirm-signup`,
   whoami: `${api}auth/whoami`,
   users: `${api}auth/users`,
-  createIssues: `${api}/issues/create`
+  createIssues: `${api}issues/create`,
+  likeIssues: `${api}issues/like`,
+  dislikeIssues: `${api}issues/dislike`,
+  resendConfirmationCode: `${api}auth/resendConfirmationCode`,
 };
