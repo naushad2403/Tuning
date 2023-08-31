@@ -102,3 +102,21 @@ export const resendConfirmationCode = async (body) => {
     };
   }
 };
+
+
+export const changePassword = async (body) => {
+  try {
+    const response = await axios.post(`${END_POINTS.changePassword}`, body);
+    if (response?.data) {
+      return {
+        data: response.data,
+        error: false,
+      };
+    }
+  } catch (e) {
+    return {
+      error: true,
+      data: e,
+    };
+  }
+};
