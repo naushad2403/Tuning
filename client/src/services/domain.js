@@ -12,6 +12,7 @@ export const END_POINTS = {
   createIssues: `${api}issues/create`,
   likeIssues: `${api}issues/like`,
   dislikeIssues: `${api}issues/dislike`,
+  updateIssues: `${api}issues/updateIssues`,
   resendConfirmationCode: `${api}auth/resendConfirmationCode`,
-  changePassword: `${api}auth/changePassword`,
+  changePassword: `${api}auth/changePassword`
 };
