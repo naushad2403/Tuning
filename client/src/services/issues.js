@@ -50,4 +50,21 @@ export const createIssues = async (body) => {
       };
     }
   };
+
+  export const updateIssues = async (body) => {
+    try {
+      const response = await axios.post(`${END_POINTS.updateIssues}`, body);
+      if (response?.data) {
+        return {
+          data: response.data,
+          error: false,
+        };
+      }
+    } catch (e) {
+      return {
+        error: true,
+        data: e,
+      };
+    }
+  };
   
