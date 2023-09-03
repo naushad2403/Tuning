@@ -85,3 +85,38 @@ export const confirmSignup = async (body) => {
     };
   }
 };
+
+export const resendConfirmationCode = async (body) => {
+  try {
+    const response = await axios.post(`${END_POINTS.singupCode}`, body);
+    if (response?.data) {
+      return {
+        data: response.data,
+        error: false,
+      };
+    }
+  } catch (e) {
+    return {
+      error: true,
+      data: e,
+    };
+  }
+};
+
+
+export const changePassword = async (body) => {
+  try {
+    const response = await axios.post(`${END_POINTS.changePassword}`, body);
+    if (response?.data) {
+      return {
+        data: response.data,
+        error: false,
+      };
+    }
+  } catch (e) {
+    return {
+      error: true,
+      data: e,
+    };
+  }
+};
