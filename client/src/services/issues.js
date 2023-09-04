@@ -68,3 +68,20 @@ export const createIssues = async (body) => {
     }
   };
   
+  
+  export const deleteIssues = async (body) => {
+    try {
+      const response = await axios.post(`${END_POINTS.deleteIssues}`, body);
+      if (response?.data) {
+        return {
+          data: response.data,
+          error: false,
+        };
+      }
+    } catch (e) {
+      return {
+        error: true,
+        data: e,
+      };
+    }
+  };
