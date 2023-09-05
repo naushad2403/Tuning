@@ -14,6 +14,7 @@ export const END_POINTS = {
   dislikeIssues: `${api}issues/dislike`,
   updateIssues: `${api}issues/updateIssues`,
   deleteIssues: `${api}issues/deleteIssues`,
+  addReason: `${api}issues/addReason`,
   resendConfirmationCode: `${api}auth/resendConfirmationCode`,
-  changePassword: `${api}auth/changePassword`
+  changePassword: `${api}auth/changePassword`,
 };

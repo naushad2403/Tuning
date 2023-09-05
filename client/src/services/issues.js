@@ -85,3 +85,20 @@ export const createIssues = async (body) => {
       };
     }
   };
+
+  export const addReason = async (body) => {
+    try {
+      const response = await axios.post(`${END_POINTS.addReason}`, body);
+      if (response?.data) {
+        return {
+          data: response.data,
+          error: false,
+        };
+      }
+    } catch (e) {
+      return {
+        error: true,
+        data: e,
+      };
+    }
+  };
