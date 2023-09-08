@@ -102,3 +102,37 @@ export const createIssues = async (body) => {
       };
     }
   };
+
+  export const likeReason = async (body) => {
+    try {
+      const response = await axios.post(`${END_POINTS.likeReason}`, body);
+      if (response?.data) {
+        return {
+          data: response.data,
+          error: false,
+        };
+      }
+    } catch (e) {
+      return {
+        error: true,
+        data: e,
+      };
+    }
+  };
+
+  export const dislikeReason = async (body) => {
+    try {
+      const response = await axios.post(`${END_POINTS.dislikeReason}`, body);
+      if (response?.data) {
+        return {
+          data: response.data,
+          error: false,
+        };
+      }
+    } catch (e) {
+      return {
+        error: true,
+        data: e,
+      };
+    }
+  };
