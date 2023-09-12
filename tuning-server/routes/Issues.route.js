@@ -126,6 +126,12 @@ router.get('/:issueId', (req, res) => {
     const pageCount = parseInt(req.query.pageCount) || 1;
 });
 
+router.put('/:issueId', (req, res) => {
+    const issueId = req.params.issueId;
+    const pageSize = parseInt(req.query.pageSize) || 10;
+    const pageCount = parseInt(req.query.pageCount) || 1;
+});
+
 router.post("/dislike", (req, res) => {
     const { issueId } = req.body;
 
